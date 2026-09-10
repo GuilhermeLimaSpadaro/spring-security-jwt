@@ -1,8 +1,8 @@
 package br.com.guilhermespadaro.controller;
 
 import br.com.guilhermespadaro.domain.User;
+import br.com.guilhermespadaro.dto.PasswordUpdateRequest;
 import br.com.guilhermespadaro.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,6 +35,11 @@ public class UserController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
         return ResponseEntity.ok().body(service.update(id, user));
+    }
+
+    @PutMapping(value = "/{id}/password")
+    public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody PasswordUpdateRequest request) {
+        return ResponseEntity.ok().body(service.updatePassword(id, request.previousPassword(), request.newPassword()));
     }
 
     @DeleteMapping(value = "/{id}")

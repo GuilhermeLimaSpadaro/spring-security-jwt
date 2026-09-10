@@ -3,6 +3,7 @@ package br.com.guilhermespadaro.service;
 import br.com.guilhermespadaro.domain.User;
 import br.com.guilhermespadaro.exception.ResourceNotFoundException;
 import br.com.guilhermespadaro.repository.UserRepository;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,15 @@ public class UserService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public User updatePassword(Long id, String previousPassword, String newPassword) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+        if (!passwordEncoder.matches(previousPassword, user.getPassword())) {
+            throw new BadCredentialsException("Wrong password");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
     }
 
