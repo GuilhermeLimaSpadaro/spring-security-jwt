@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll().anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll().anyRequest().authenticated())
 
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(config -> config.jwt(Customizer.withDefaults()))
