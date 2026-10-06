@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService service;
